@@ -3,6 +3,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import numpy as np
+import math
 
 # naive approach of finding the number of shopping malls in radius of the df
 def num_shopping_malls_df(df, df_shopping_malls, radius=2):
@@ -71,12 +72,16 @@ def num_shopping_malls_df_Kmeans(df, df_shopping_malls, radius=2, k=3):
     return num_list
 
 
+def euclidean_distance(point1, point2):
+    return math.sqrt(sum((x - y) ** 2 for x, y in zip(point1, point2)))
+
+
 # find k nearest centers
 def find_nearby_centers(lat, long, centers, k):
     distances = []
     house_position = (lat, long)
     for i, center in enumerate(centers):
-        distance = geodesic(house_position, (centers[i, 0], centers[i, 1]))
+        distance = euclidean_distance(house_position, (centers[i, 0], centers[i, 1]))
         distances.append((distance, i))
     distances.sort()
     return [i[1] for i in distances[:k]]
