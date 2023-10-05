@@ -39,9 +39,11 @@ def binary_encoding(df_train, df_test, col_name):
 One-hot encoding of flat_type
 Example usage:
 Assuming you have a DataFrame df and you want to one-hot encode the "Category" column
-df = one_hot_encode_column(df, "Category")
+df = one_hot_encode_column(df, "Category", order, status)
+order is for test set to get the same order with train data
+status is either "train" or "test", although I did not check
 """
-def one_hot_encode_column(df, column_name, order, status, rank = 0):
+def one_hot_encode_column(df, column_name, order, status):
     # Extract the specified column from the DataFrame
     column = df[column_name]
     
@@ -49,23 +51,30 @@ def one_hot_encode_column(df, column_name, order, status, rank = 0):
         # Get unique values in the column
         unique_values = column.unique()
 
-        if rank != 0:
-            unique_values = df.groupby(column_name)['monthly_rent'].mean().sort_values().reset_index()[column_name].tolist()
             
     if status == "test":
         unique_values = order
     
     # Create a new DataFrame with binary columns
     binary_columns = pd.DataFrame(0, columns=unique_values, index=df.index)
+
     
     # Set binary values based on one-hot encoding
     for value in unique_values:
         binary_columns.loc[column == value, value] = 1
     
     # Concatenate the binary columns into a single column with binary strings
-    df[column_name] = binary_columns.apply(lambda row: ''.join(map(str, row)), axis=1)
+    df = pd.concat([df, binary_columns], axis=1)
+    df.drop(columns=[column_name], inplace=True)
+    
+    #Rename column
+    for name in unique_values:
+        df = df.rename(columns={name: f"{column_name}_{name}"})
+    
     
     return df, unique_values
+
+
 
 
 """
