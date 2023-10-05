@@ -22,10 +22,18 @@ def process_date(df):
     df['rent_approval_date'] = scaler.fit_transform(df[['rent_approval_date']])
     return 
 
-# binary encoding of town attribute
-def binary_encoding(df, col_name):
-    df = BinaryEncoder(cols=[col_name]).fit_transform(df)
-    return df
+# binary encoding of town
+def binary_encoding(df_train, df_test, col_name):
+    encoder = BinaryEncoder(cols=[col_name])
+    df_train = encoder.fit_transform(df_train)
+    
+    num_rows = df_test.shape[0]
+    pad_col = pd.DataFrame(np.zeros([num_rows, 1]), columns = ['pad'])
+    df_test_pad = pd.concat([df_test, pad_col], axis = 1)
+    df_test_pad = encoder.transform(df_test_pad)
+    df_test = df_test_pad.iloc[:,:-1]
+    
+    return df_train, df_test
 
 """
 One-hot encoding of flat_type
