@@ -141,4 +141,26 @@ def insert_col_coe_price(df_coe, df):
     list_avg_coe_price = df_coe['price'][list_index_date].to_list()
     df['avg_coe_price'] = list_avg_coe_price
     
+"""
+6. sg_primary_schools
+"""
+def num_primary_schools_df_Kmeans(df, df_primary_schools, radius=2, k=3):
     
+    # K-means
+    kmeans = KMeans(n_clusters=14, random_state=42)
+    kmeans.fit(df_primary_schools)
+    centers = kmeans.cluster_centers_
+    labels = kmeans.labels_
+    
+    num_list = []
+    for i in df.index:
+        lat = df['latitude'][i]
+        long = df['longitude'][i]
+        #find the most three nearby centers
+        nearby_centers = find_nearby_centers(lat, long, centers, k)
+        df_partial_school = df_primary_schools.iloc[np.where(np.isin(labels, nearby_centers))]
+#         print(len(df_partial_school))
+        num_school = num_shopping_malls_pt(lat, long, df_partial_school, radius)
+        num_list.append(num_school)
+    df['num_primary_schools'] = num_list
+    return num_list
