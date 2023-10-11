@@ -11,12 +11,12 @@ import math
 1. sg_stock_prices
 """
 # check if the date range in train/test data is fully covered in stock data
-def is_full_coverage(df_stock, df_train, df_test):
-    date_stock = df_stock['date'].unique()
+def is_full_coverage(df_auxi, df_train, df_test):
+    date_auxi = df_auxi['date'].unique()
     date_train = df_train['rent_approval_date'].unique()
     date_test = df_test['rent_approval_date'].unique()
-    print("Date in stock data covers all in train data? {}".format(all(item in date_stock for item in date_train)))
-    print("Date in stock data covers all in test data? {}".format(all(item in date_stock for item in date_test)))
+    print("Date in auxi data covers all in train data? {}".format(all(item in date_auxi for item in date_train)))
+    print("Date in auxi data covers all in test data? {}".format(all(item in date_auxi for item in date_test)))
     
 # get average adjusted close price for each year-month
 def get_avg_adjusted_close(df_stock):
@@ -31,6 +31,9 @@ def insert_col_stock_price(df_stock, df):
     df['avg_stock_price'] = list_avg_stock_price
     
 
+"""
+2. sg-shopping-malls
+"""
 # naive approach of finding the number of shopping malls in radius of the df
 def num_shopping_malls_df(df, df_shopping_malls, radius=2):
     num_list = []
@@ -64,10 +67,6 @@ def num_shopping_malls_pt(lat, long, df_shopping_malls, radius=2):
 
     return num_shopping
 
-
-"""
-2. sg-shopping-malls
-"""
 """ 
 Kmeans approach of finding the number of shopping malls in radius of the df. it will modify df internally
 inputs:
@@ -127,4 +126,19 @@ def calculate_min_distance(row, df_mrt):
         if distance < min_distance:
             min_distance = distance
     return min_distance
+
+"""
+4. sg_coe_prices
+"""
+# get average coe price for each year-month
+def get_avg_coe_price(df_coe):
+    df_coe = df_coe.groupby('date', as_index=False)['price'].mean()
+    return df_coe
+
+# add avg_coe_price column for train/test data
+def insert_col_coe_price(df_coe, df):
+    list_index_date = [df_coe.index[df_coe['date'] == x][0] for x in df['rent_approval_date']]
+    list_avg_coe_price = df_coe['price'][list_index_date].to_list()
+    df['avg_coe_price'] = list_avg_coe_price
+    
     
