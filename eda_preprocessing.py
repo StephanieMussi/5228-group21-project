@@ -4,7 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
 import numpy as np
 from category_encoders import BinaryEncoder
-
+from sklearn.preprocessing import TargetEncoder
 
 
 # alignment of flat_type for consistent spelling
@@ -34,6 +34,14 @@ def binary_encoding(df_train, df_test, col_name):
     df_test = df_test_pad.iloc[:,:-1]
     
     return df_train, df_test
+
+# target encoding of column
+def target_encoding(df_train, df_test, col_name):
+    encoder = TargetEncoder(smooth="auto", target_type='continuous')
+    df_train[col_name] = encoder.fit_transform(df_train[col_name].values.reshape(-1, 1), df_train['monthly_rent'])
+    df_test[col_name] = encoder.transform(df_test[col_name].values.reshape(-1, 1))
+    return df_train, df_test
+    
 
 """
 One-hot encoding of flat_type
