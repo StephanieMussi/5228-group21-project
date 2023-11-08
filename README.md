@@ -1,17 +1,20 @@
-# 5228-group21-project
-
 Kaggle: https://www.kaggle.com/competitions/cs5228-2310-final-project
 
 <!-- ABOUT THE PROJECT -->
 # Steps to run the project codes
 
-## 1. Auxiliary data
+## 1. Adding auxiliary data
 1_Auxiliary_Attributes.ipynb
 auxiliary.py
 
-## 2. EDA
+Output files can be found in: 
+* data/train_auxi.csv
+* data/test_auxi.csv
+
+## 2. EDA & Preprocessing
 2_EDA.ipynb
 eda_preprocessing.py
+
 Output files can be found in: 
 * data/train_new.csv
 * data/test_new.csv
@@ -20,6 +23,7 @@ Output files can be found in:
 
 ## 4. Gradient Boosting
 experiments/msy_gb.ipynb
+
 Output files can be found in: 
 * data/gb_output_sklearn.csv
 * data/gb_output_xgboost.csv
