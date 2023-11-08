@@ -21,7 +21,7 @@ Output files can be found in:
 experiments/oyyj_lr.ipynb
 
 Output file can be found in:
-oyyj_lr_output.csv
+* oyyj_lr_output.csv
 
 ## 4. Gradient Boosting
 experiments/msy_gb.ipynb
@@ -36,15 +36,16 @@ Output files can be found in:
 experiments/zyt.ipynb
 
 Output file can be found in:
+* 
 
 ## 6. K Nearest Neighbors
 experiments/lhq.ipynb
 
 Output file can be found in:
-lhq_output.csv
+* lhq_output.csv
 
 ## 7. Stack Regression
 experiments/zyt_stack_regression.ipynb
 
 Output file can be found in:
-data/stack_output.csv
+* data/stack_output.csv
