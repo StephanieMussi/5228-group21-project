@@ -33,10 +33,10 @@ Output files can be found in:
 * data/gb_output_lightgbm.csv
 
 ## 5. Random Forest
-experiments/zyt.ipynb
+experiments/zyt_stack_regression.ipynb
 
 Output file can be found in:
-* 
+* data/output_rf.csv
 
 ## 6. K Nearest Neighbors
 experiments/lhq.ipynb
