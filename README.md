@@ -39,7 +39,7 @@ Output file can be found in:
 * data/output_rf.csv
 
 ## 6. K Nearest Neighbors
-experiments/lhq.ipynb
+experiments/lhq_knn.ipynb
 
 Output file can be found in:
 * knn_output_k23.csv
