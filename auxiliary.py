@@ -17,7 +17,13 @@ def is_full_coverage(df_auxi, df_train, df_test):
     date_test = df_test['rent_approval_date'].unique()
     print("Date in auxi data covers all in train data? {}".format(all(item in date_auxi for item in date_train)))
     print("Date in auxi data covers all in test data? {}".format(all(item in date_auxi for item in date_test)))
-    
+
+# get average stock prices for each year-month
+def get_avg_prices(df_stock):
+    df_stock['date'] = [x[0:7] for x in df_stock['date']]
+    df_stock = df_stock.groupby('date', as_index=False)[['open', 'high', 'low', 'close', 'adjusted_close']].mean()
+    return df_stock
+
 # get average adjusted close price for each year-month
 def get_avg_adjusted_close(df_stock):
     df_stock['date'] = [x[0:7] for x in df_stock['date']]
