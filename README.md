@@ -42,7 +42,7 @@ Output file can be found in:
 experiments/lhq.ipynb
 
 Output file can be found in:
-* lhq_output.csv
+* knn_output_k23.csv
 
 ## 7. Stack Regression
 experiments/zyt_stack_regression.ipynb
